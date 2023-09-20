@@ -1,5 +1,5 @@
 /*
-   Copyright (c) Utkan Güngördü <utkan@freeconsole.org>
+   Copyright (c) Utkan Güngördü <utkan@freeconsole.org>, Dariusz Sikora <ds@isangeles.dev>
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as
@@ -62,97 +62,97 @@ type ID uint32
 
 // All structs have their fields exported, and you'll be on the safe side as long as treat them read-only (anyone want to write 100 getters?).
 type Map struct {
-	Version      string        `xml:"title,attr"`
-	Orientation  string        `xml:"orientation,attr"`
-	Width        int           `xml:"width,attr"`
-	Height       int           `xml:"height,attr"`
-	TileWidth    int           `xml:"tilewidth,attr"`
-	TileHeight   int           `xml:"tileheight,attr"`
-	Properties   []Property    `xml:"properties>property"`
-	Tilesets     []Tileset     `xml:"tileset"`
-	Layers       []Layer       `xml:"layer"`
-	ObjectGroups []ObjectGroup `xml:"objectgroup"`
+	Version      string        `xml:"title,attr" json:"title"`
+	Orientation  string        `xml:"orientation,attr" json:"orientation"`
+	Width        int           `xml:"width,attr" json:"width"`
+	Height       int           `xml:"height,attr" json:"height"`
+	TileWidth    int           `xml:"tilewidth,attr" json:"tilewidth"`
+	TileHeight   int           `xml:"tileheight,attr" json:"tileheight"`
+	Properties   []Property    `xml:"properties>property" json:"properties"`
+	Tilesets     []Tileset     `xml:"tileset" json:"tilesets"`
+	Layers       []Layer       `xml:"layer" json:"layers"`
+	ObjectGroups []ObjectGroup `xml:"objectgroup" json:"objectgroup"`
 }
 
 type Tileset struct {
-	FirstGID   GID        `xml:"firstgid,attr"`
-	Source     string     `xml:"source,attr"`
-	Name       string     `xml:"name,attr"`
-	TileWidth  int        `xml:"tilewidth,attr"`
-	TileHeight int        `xml:"tileheight,attr"`
-	Spacing    int        `xml:"spacing,attr"`
-	Margin     int        `xml:"margin,attr"`
-	Properties []Property `xml:"properties>property"`
-	Image      Image      `xml:"image"`
-	Tiles      []Tile     `xml:"tile"`
-	Tilecount  int        `xml:"tilecount,attr"`
-	Columns    int        `xml:"columns,attr"`
+	FirstGID   GID        `xml:"firstgid,attr" json:"firstgid"`
+	Source     string     `xml:"source,attr" json:"source"`
+	Name       string     `xml:"name,attr" json:"name"`
+	TileWidth  int        `xml:"tilewidth,attr" json:"tilewidth"`
+	TileHeight int        `xml:"tileheight,attr" json:"tileheight"`
+	Spacing    int        `xml:"spacing,attr" json:"spacing"`
+	Margin     int        `xml:"margin,attr" json:"margin"`
+	Properties []Property `xml:"properties>property" json:"properties"`
+	Image      Image      `xml:"image" json:"image"`
+	Tiles      []Tile     `xml:"tile" json:"tile"`
+	Tilecount  int        `xml:"tilecount,attr" json:"tilecount"`
+	Columns    int        `xml:"columns,attr" json:"colums"`
 }
 
 type Image struct {
-	Source string `xml:"source,attr"`
-	Trans  string `xml:"trans,attr"`
-	Width  int    `xml:"width,attr"`
-	Height int    `xml:"height,attr"`
+	Source string `xml:"source,attr" json:"source"`
+	Trans  string `xml:"trans,attr" json:"trans"`
+	Width  int    `xml:"width,attr" json:"width"`
+	Height int    `xml:"height,attr" json:"height"`
 }
 
 type Tile struct {
-	ID    ID    `xml:"id,attr"`
-	Image Image `xml:"image"`
+	ID    ID    `xml:"id,attr" json:"id"`
+	Image Image `xml:"image" json:"image"`
 }
 
 type Layer struct {
-	Name         string         `xml:"name,attr"`
-	Opacity      float32        `xml:"opacity,attr"`
-	Visible      bool           `xml:"visible,attr"`
-	Properties   []Property     `xml:"properties>property"`
-	Data         Data           `xml:"data"`
-	DecodedTiles []*DecodedTile // This is the attiribute you'd like to use, not Data. Tile entry at (x,y) is obtained using l.DecodedTiles[y*map.Width+x].
-	Tileset      *Tileset       // This is only set when the layer uses a single tileset and NilLayer is false.
-	Empty        bool           // Set when all entries of the layer are NilTile
+	Name         string         `xml:"name,attr" json:"name"`
+	Opacity      float32        `xml:"opacity,attr" json:"opacity"`
+	Visible      bool           `xml:"visible,attr" json:"visible"`
+	Properties   []Property     `xml:"properties>property" json:"properties"`
+	Data         Data           `xml:"data" json:"data"`
+	DecodedTiles []*DecodedTile `xml:"-" json:"-"` // This is the attiribute you'd like to use, not Data. Tile entry at (x,y) is obtained using l.DecodedTiles[y*map.Width+x].
+	Tileset      *Tileset       `xml:"-" json:"-"` // This is only set when the layer uses a single tileset and NilLayer is false.
+	Empty        bool           `xml:"-" json:"-"` // Set when all entries of the layer are NilTile
 }
 
 type Data struct {
-	Encoding    string     `xml:"encoding,attr"`
-	Compression string     `xml:"compression,attr"`
-	RawData     []byte     `xml:",innerxml"`
-	DataTiles   []DataTile `xml:"tile"` // Only used when layer encoding is xml
+	Encoding    string     `xml:"encoding,attr" json:"encoding"`
+	Compression string     `xml:"compression,attr" json:"compression"`
+	RawData     []byte     `xml:",innerxml" json:"innerxml"`
+	DataTiles   []DataTile `xml:"tile" json:"tile"` // Only used when layer encoding is xml
 }
 
 type ObjectGroup struct {
-	Name       string     `xml:"name,attr"`
-	Color      string     `xml:"color,attr"`
-	Opacity    float32    `xml:"opacity,attr"`
-	Visible    bool       `xml:"visible,attr"`
-	Properties []Property `xml:"properties>property"`
-	Objects    []Object   `xml:"object"`
+	Name       string     `xml:"name,attr" json:"name"`
+	Color      string     `xml:"color,attr" json:"color"`
+	Opacity    float32    `xml:"opacity,attr" json:"opacity"`
+	Visible    bool       `xml:"visible,attr" json:"visible"`
+	Properties []Property `xml:"properties>property" json:"properties"`
+	Objects    []Object   `xml:"object" json:"object"`
 }
 
 type Object struct {
-	Name       string     `xml:"name,attr"`
-	Type       string     `xml:"type,attr"`
-	X          float64    `xml:"x,attr"`
-	Y          float64    `xml:"y,attr"`
-	Width      float64    `xml:"width,attr"`
-	Height     float64    `xml:"height,attr"`
-	GID        int        `xml:"gid,attr"`
-	Visible    bool       `xml:"visible,attr"`
-	Polygons   []Polygon  `xml:"polygon"`
-	PolyLines  []PolyLine `xml:"polyline"`
-	Properties []Property `xml:"properties>property"`
+	Name       string     `xml:"name,attr" json:"name"`
+	Type       string     `xml:"type,attr" json:"type"`
+	X          float64    `xml:"x,attr" json:"x"`
+	Y          float64    `xml:"y,attr" json:"y"`
+	Width      float64    `xml:"width,attr" json:"width"`
+	Height     float64    `xml:"height,attr" json:"height"`
+	GID        int        `xml:"gid,attr" json"gid"`
+	Visible    bool       `xml:"visible,attr" json:"visible"`
+	Polygons   []Polygon  `xml:"polygon" json:"polygon"`
+	PolyLines  []PolyLine `xml:"polyline" json:"polyline"`
+	Properties []Property `xml:"properties>property" json:"properties"`
 }
 
 type Polygon struct {
-	Points string `xml:"points,attr"`
+	Points string `xml:"points,attr" json:"points"`
 }
 
 type PolyLine struct {
-	Points string `xml:"points,attr"`
+	Points string `xml:"points,attr" json:"points"`
 }
 
 type Property struct {
-	Name  string `xml:"name,attr"`
-	Value string `xml:"value,attr"`
+	Name  string `xml:"name,attr" json:"name"`
+	Value string `xml:"value,attr" json:"value"`
 }
 
 func (d *Data) decodeBase64() (data []byte, err error) {
