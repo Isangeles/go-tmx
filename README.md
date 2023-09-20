@@ -1,5 +1,5 @@
 ## Introduction
-This is the fork of Salviati's [go-tmx](https://github.com/salviati/go-tmx) library, with additions JSON mappings added.
+This is the fork of Salviati's [go-tmx](https://github.com/salviati/go-tmx) library, with additional JSON mappings.
 
 ## Contributing
 You are welcome to contribute to project development.
