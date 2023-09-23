@@ -52,8 +52,8 @@ const (
 )
 
 type Console interface {
-	MaxTiles(m *tmx.Map, l *tmx.Layer) int                                                 // Maximum number of allowed tiles
-	ScreenblockEntry(m *tmx.Map, l *tmx.Layer, tile *tmx.DecodedTile) (interface{}, error) // Should convert a GID to machine-specific screenblock entry.
+	MaxTiles(m *gotmx.Map, l *gotmx.Layer) int                                                 // Maximum number of allowed tiles
+	ScreenblockEntry(m *gotmx.Map, l *gotmx.Layer, tile *gotmx.DecodedTile) (interface{}, error) // Should convert a GID to machine-specific screenblock entry.
 	ByteOrder() binary.ByteOrder
 }
 
@@ -64,7 +64,7 @@ func Do(c Console, filename string) error {
 		return err
 	}
 
-	m, err := tmx.Read(r)
+	m, err := gotmx.Read(r)
 	if err != nil {
 		return err
 	}
@@ -75,7 +75,7 @@ func Do(c Console, filename string) error {
 	}
 	filenameBare := filename[:len(filename)-len(ext)-1]
 
-	saveLayer := func(l *tmx.Layer, w io.WriteCloser) error {
+	saveLayer := func(l *gotmx.Layer, w io.WriteCloser) error {
 		defer w.Close()
 		b := w
 
@@ -117,7 +117,7 @@ func Do(c Console, filename string) error {
 		return nil
 	}
 
-	saveLayerBitmap := func(l *tmx.Layer, w io.WriteCloser) error {
+	saveLayerBitmap := func(l *gotmx.Layer, w io.WriteCloser) error {
 		defer w.Close()
 
 		i := uint(0)

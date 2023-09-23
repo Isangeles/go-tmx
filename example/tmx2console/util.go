@@ -10,7 +10,7 @@ var (
 	PropertyUnavailable = errors.New("Property does not exist")
 )
 
-func GetProperty(properties []tmx.Property, name string) (value string, err error) {
+func GetProperty(properties []gotmx.Property, name string) (value string, err error) {
 	values := make([]string, 0)
 	for i := range properties {
 		if properties[i].Name == name {

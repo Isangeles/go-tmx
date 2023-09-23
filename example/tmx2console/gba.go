@@ -34,11 +34,11 @@ const (
 )
 
 type GBA struct {
-	isAffineCache map[*tmx.Layer]bool // FIXME(utkan): One may get a pointer collision. Fail-safe practice would be to use a new GBA instance for each map.
-	nilTileCache  map[*tmx.Layer]uint16
+	isAffineCache map[*gotmx.Layer]bool // FIXME(utkan): One may get a pointer collision. Fail-safe practice would be to use a new GBA instance for each map.
+	nilTileCache  map[*gotmx.Layer]uint16
 }
 
-func (g *GBA) MaxTiles(m *tmx.Map, l *tmx.Layer) int {
+func (g *GBA) MaxTiles(m *gotmx.Map, l *gotmx.Layer) int {
 	// Save one for nil-tile. FIXME(utkan): Not everone will need an extra tile.
 	if g.isAffine(l) {
 		return 255
@@ -46,9 +46,9 @@ func (g *GBA) MaxTiles(m *tmx.Map, l *tmx.Layer) int {
 	return 511
 }
 
-func (g *GBA) isAffine(l *tmx.Layer) bool {
+func (g *GBA) isAffine(l *gotmx.Layer) bool {
 	if g.isAffineCache == nil {
-		g.isAffineCache = make(map[*tmx.Layer]bool)
+		g.isAffineCache = make(map[*gotmx.Layer]bool)
 	}
 
 	affine, ok := g.isAffineCache[l]
@@ -61,9 +61,9 @@ func (g *GBA) isAffine(l *tmx.Layer) bool {
 	return affine
 }
 
-func (g *GBA) nilTile(m *tmx.Map, l *tmx.Layer) interface{} {
+func (g *GBA) nilTile(m *gotmx.Map, l *gotmx.Layer) interface{} {
 	if g.nilTileCache == nil {
-		g.nilTileCache = make(map[*tmx.Layer]uint16)
+		g.nilTileCache = make(map[*gotmx.Layer]uint16)
 	}
 
 	nilTile, ok := g.nilTileCache[l]
@@ -83,7 +83,7 @@ func (g *GBA) nilTile(m *tmx.Map, l *tmx.Layer) interface{} {
 	return nilTile
 }
 
-func (g *GBA) ScreenblockEntry(m *tmx.Map, l *tmx.Layer, tile *tmx.DecodedTile) (interface{}, error) {
+func (g *GBA) ScreenblockEntry(m *gotmx.Map, l *gotmx.Layer, tile *gotmx.DecodedTile) (interface{}, error) {
 	affine := g.isAffine(l)
 
 	rval := func(v uint16) interface{} {
