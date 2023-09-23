@@ -1,4 +1,4 @@
-module github.com/isangeles/go-tmx
+module github.com/isangeles/gotmx
 
 go 1.20
 

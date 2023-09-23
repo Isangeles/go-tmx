@@ -25,7 +25,7 @@ package main
 import (
 	"encoding/binary"
 	"errors"
-	"github.com/isangeles/go-tmx"
+	"github.com/isangeles/gotmx"
 	"github.com/salviati/gbacomp"
 	"io"
 	"os"

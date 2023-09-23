@@ -2,7 +2,7 @@ package main
 
 import (
 	"errors"
-	"github.com/isangeles/go-tmx"
+	"github.com/isangeles/gotmx"
 )
 
 var (
