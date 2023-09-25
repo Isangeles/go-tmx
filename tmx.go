@@ -21,7 +21,7 @@
 */
 
 // A Go library that reads Tiled's TMX files.
-package gotmx
+package tmx
 
 import (
 	"bytes"
