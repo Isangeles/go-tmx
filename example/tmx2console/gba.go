@@ -24,7 +24,7 @@ package main
 
 import (
 	"encoding/binary"
-	"github.com/isangeles/gotmx"
+	"github.com/isangeles/tmx"
 	"strconv"
 )
 
